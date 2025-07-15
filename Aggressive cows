@@ -1,0 +1,98 @@
+// problem : aggressive cows 
+// difficulty : medium
+// topic : binary search
+// brute force solution
+// User function Template for Java
+class Solution {
+    public static int aggressiveCows(int[] stalls, int k) {
+        // code here
+        Arrays.sort(stalls);
+        
+       
+       
+       int farthest = stalls[stalls.length-1] - stalls[0];
+       
+       for( int i = 1 ; i< farthest ;i++){
+           if(canplace(stalls,i,k)){
+               continue;
+           }
+           else return i-1;
+       }
+       
+       return farthest;
+    }
+    
+    private static boolean canplace( int [] stalls , int mindist , int cows){
+        int coord = stalls[0];
+        int countcow=1;
+        
+        for( int i = 1 ; i < stalls.length ; i++){
+            if(stalls[i]-coord>=mindist){
+                countcow++;
+                coord=stalls[i];
+            }
+        }
+        
+        if(countcow>=cows) return true;
+        else return false;
+    }
+}
+
+// optimal solution
+// User function Template for Java
+class Solution {
+    public static int aggressiveCowsBF(int[] stalls, int k) {
+        // code here
+        Arrays.sort(stalls);
+    
+       int farthest = stalls[stalls.length-1] - stalls[0];
+       
+       for( int i = 1 ; i< farthest ;i++){
+           if(canplace(stalls,i,k)){
+               continue;
+           }
+           else return i-1;
+       }
+       
+       return farthest;
+    }
+    
+    private static boolean canplace( int [] stalls , int mindist , int cows){
+        int coord = stalls[0];
+        int countcow=1;
+        
+        for( int i = 1 ; i < stalls.length ; i++){
+            if(stalls[i]-coord>=mindist){
+                countcow++;
+                coord=stalls[i];
+            }
+        }
+        
+        if(countcow>=cows) return true;
+        else return false;
+    }
+    
+    public static int aggressiveCows(int[] stalls, int k){
+        Arrays.sort(stalls);
+    
+       int farthest = stalls[stalls.length-1] - stalls[0];
+       
+       int low = 0 ;
+       int high = farthest;
+       
+       
+       while(low<=high){
+           int mid = ( low + high )/2;
+           
+           if(canplace(stalls,mid,k)){
+               
+               low = mid + 1;
+               
+           }
+           else high = mid - 1 ;
+       }
+       
+       return high;
+        
+    }
+}
