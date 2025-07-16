@@ -1,0 +1,50 @@
+// problem : Allocate Minimum Pages
+// difficulty : medium
+// topic : binary serach
+class Solution {
+    public static int findPages(int[] arr, int k) {
+        
+        if (k > arr.length) return -1; 
+        // code here
+        int leastpage = arr[0];
+        int maxpage=0;
+       
+        
+        for( int i : arr){
+            leastpage = Math.max(leastpage,i);
+            maxpage+=i;
+        }
+        
+        while(leastpage<=maxpage){
+            int mid = leastpage+(maxpage-leastpage)/2;
+            int students = distribute(arr,mid);
+        
+            if(students>k){
+                leastpage = mid + 1 ;
+            }
+            else {
+                maxpage=mid-1;
+                
+            }
+        }
+            
+        
+        return leastpage;
+        
+    }
+    
+    private static int distribute(int[] arr , int pages){
+        int part = 1 ;
+        int total = 0 ;
+         for( int i : arr){
+             if(total+i<=pages){
+                 total+=i;
+             }
+             else {
+                 part++;
+                 total=i;
+             }
+         }
+         return part;
+    }
+}
