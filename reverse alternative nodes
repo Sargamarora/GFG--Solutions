@@ -1,0 +1,36 @@
+// problem reverse alternative nodes
+class Solution {
+     public static Node reverse(Node head){
+        Node curr = head;
+        Node prev=null;
+
+        while(curr!=null){
+            Node nxt = curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=nxt;
+        }
+        return prev;
+    }
+    public static void rearrange(Node odd) {
+        // add your code here
+          if (odd == null || odd.next == null || odd.next.next == null) {
+            return;
+        }
+
+        Node oddcurrent = odd;
+        Node evencurrent = odd.next;
+        Node evenhead = evencurrent;
+
+
+        while(evencurrent!=null && evencurrent.next!=null){
+            oddcurrent.next=evencurrent.next;
+            oddcurrent=oddcurrent.next;
+            evencurrent.next=oddcurrent.next;
+            evencurrent=evencurrent.next;
+        }
+        oddcurrent.next = reverse(evenhead);
+
+        
+    }
+}
